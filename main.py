@@ -1,5 +1,5 @@
 import numpy as np
-
+import random
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -9,7 +9,7 @@ def sigmoid_derivative(x):
     return x * (1 - x)
 
 
-random_seed = 1
+random_seed = random.randint(0, 1000000000)
 np.random.seed(random_seed)
 
 training_outputs = np.random.rand(1000)
@@ -29,7 +29,7 @@ synaptic_weights = 2 * np.random.random(3) - 1
 
 print(f"Random start synaptic weights:\n{synaptic_weights}")
 
-for iteration in range(10000):
+for iteration in range(5000):
 
     input_layer = training_inputs
     outputs = sigmoid(np.dot(input_layer, synaptic_weights))
@@ -53,6 +53,25 @@ print("Average Error: " + str(np.average(error)))
 user_array_var1 = input("Array-cast 1: ")
 user_array_var2 = input("Array-cast 2: ")
 user_array_var3 = input("Array-cast 3: ")
+
+if int(user_array_var1) >= .5:
+    user_array_var1 = 1
+else:
+    user_array_var1 = 0
+print("Rounding array-cast 1 to " + str(user_array_var1))
+
+if int(user_array_var2) >= .5:
+    user_array_var2 = 1
+else:
+    user_array_var2 = 0
+print("Rounding array-cast 2 to " + str(user_array_var2))
+
+if int(user_array_var3) >= .5:
+    user_array_var3 = 1
+else:
+    user_array_var3 = 0
+print("Rounding array-cast 3 to " + str(user_array_var3))
+
 
 user_array = np.random.random(3)
 user_array[0] = user_array_var1
