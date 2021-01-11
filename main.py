@@ -9,7 +9,8 @@ def sigmoid_derivative(x):
     return x * (1 - x)
 
 
-np.random.seed(1)
+random_seed = 1
+np.random.seed(random_seed)
 
 training_outputs = np.random.rand(1000)
 
@@ -48,3 +49,19 @@ print(f"Synaptic weights after training:\n{synaptic_weights}")
 # print("Inputs: " + str(input_layer))
 
 print("Average Error: " + str(np.average(error)))
+
+user_array_var1 = input("Array-cast 1: ")
+user_array_var2 = input("Array-cast 2: ")
+user_array_var3 = input("Array-cast 3: ")
+
+user_array = np.random.random(3)
+user_array[0] = user_array_var1
+user_array[1] = user_array_var2
+user_array[2] = user_array_var3
+
+user_output = sigmoid(np.dot(user_array, synaptic_weights))
+rounded_user_output = np.around(user_output, decimals=0)
+
+print(f"Algorithm prediction, based on the training on the random seed \'" + str(random_seed) + f"\'")
+print(f"Raw output:\n{user_output}")
+print(f"Rounded output:\n{rounded_user_output}")
