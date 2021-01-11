@@ -117,7 +117,7 @@ for i in range(3):
     else:
         user_array_input = return_one_or_zero(user_array_input)
 
-    user_array[i-1] = user_array_input
+    user_array[i] = user_array_input
 
 user_output = sigmoid(np.dot(user_array, synaptic_weights))
 rounded_user_output = np.around(user_output, decimals=0)
