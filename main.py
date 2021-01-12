@@ -35,11 +35,11 @@ def return_one_or_zero(x):
 
 # --------------------------------------- VARIABLES ---------------------------------------
 
-number_of_layers = 100000
+number_of_layers = 10000
 
-dataset_size = 1000
+dataset_size = 2000
 
-fixed_seed = None
+fixed_seed = 1
 
 random_seed = random.randint(0, 1000000000)
 
@@ -71,7 +71,9 @@ training_inputs = reshaped_array
 # Correct outputs based off of dataset
 for iteration in range(dataset_size):
     if reshaped_array[iteration, 0] == 1:
-        training_outputs[iteration] = 1
+        if reshaped_array[iteration, 2] == 1:
+            training_outputs[iteration] = 1
+            # The current rule: if 1s are in both the 0 and 2 position of the array, the output should be 1
     else:
         training_outputs[iteration] = 0
 
@@ -98,16 +100,18 @@ for iteration in range(number_of_layers):
 
 print(f"Synaptic weights after training:\n{synaptic_weights}")
 
+print("Average Error: " + str(np.average(error)))
+
 # DEBUG:
 # print(f"Outputs after training:\n{outputs}")
 # print("Inputs: " + str(input_layer))
 
-print("Average Error: " + str(np.average(error)))
-
 # --------------------------------------- USER INPUT ---------------------------------------
 
+# Initialize the user's input array
 user_array = np.random.random(3)
 
+# Ask for and copy each of the inputs to the array
 for i in range(3):
     user_array_input = input("AC" + str(i + 1) + ": ")
 
@@ -119,9 +123,23 @@ for i in range(3):
 
     user_array[i] = user_array_input
 
+# Calculate outputs
 user_output = sigmoid(np.dot(user_array, synaptic_weights))
 rounded_user_output = np.around(user_output, decimals=0)
 
-print(f"Algorithm prediction, based on the training on the random seed \'" + str(random_seed) + f"\'")
-print(f"Raw output:\n{user_output}")
-print(f"Rounded output:\n{rounded_user_output}")
+# Determine whether fixed or random seed, and print respectfully
+if isinstance(fixed_seed, int) or isinstance(fixed_seed, float):
+    print(f"Algorithm prediction, based on the training on the fixed seed \'" + str(fixed_seed) + f"\'")
+else:
+    print(f"Algorithm prediction, based on the training on the random seed \'" + str(random_seed) + f"\'")
+
+print("Educated guess on output:\n" + str(rounded_user_output))
+
+# Calculate confidence level
+if rounded_user_output == 1:
+    print("Confidence level:\n~" + str(np.around(user_output*100, decimals=3)) + "%")
+else:
+    print("Confidence level:\n~" + str(np.around(100-user_output * 100, decimals=3)) + "%")
+
+# DEBUG
+# print("Raw user output:\n" + str(user_output))
