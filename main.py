@@ -1,10 +1,15 @@
-# --------------------------------------- EXPLANATION ---------------------------------------
+# --------------------------------------- PREFACE ---------------------------------------
 # This is the near final product of my ST OR.
-# In it's current state (v1.5), it can:
+# In it's current state (v1.8), it can:
 # Generate its own dataset and calculate outputs.
 # Train it's self on that generated dataset.
 # Predict accurately ___% of the time what the output will be using a sigmoid function.
-# Made, tested, fixed, and polished in roughly 45 hours (in the current state of v1.5).
+# Made, tested, fixed, and polished in roughly 53 hours (in the current state of v1.8).
+
+# As discovered later, the math here isn't advanced enough to recognize and understand if two variables are required for
+# the output to be 1, so applying any outside datasets and running them through will not work. If I had the time, I'd
+# look for another function that could get more complex with multi-variable weighted output, but I only have 3 days
+# left... oh boy!
 
 # --------------------------------------- MODULES ---------------------------------------
 
@@ -70,9 +75,9 @@ training_inputs = reshaped_array
 
 # Correct outputs based off of dataset
 for iteration in range(dataset_size):
-    if reshaped_array[iteration, 0] == 1 and reshaped_array[iteration, 2]:
+    if reshaped_array[iteration, 0] == 1:
         training_outputs[iteration] = 1
-        # The current rule: if 1s are in both the 0 and 2 position of the array, the output should be 1
+        # The current rule: if there's a 1 in the first slot, the output should be 1
     else:
         training_outputs[iteration] = 0
 
