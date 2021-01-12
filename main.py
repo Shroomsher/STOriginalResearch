@@ -42,7 +42,7 @@ def return_one_or_zero(x):
 
 training_iterations = 100000
 
-dataset_size = 5000
+dataset_size = 2000
 
 seed = None
 # 48071936
@@ -148,9 +148,9 @@ while continuing != 'n':
 
     # Calculate confidence level
     if rounded_user_output == 1:
-        print("Confidence level:\n~" + str(np.around(user_output*100, decimals=3)) + "%")
+        print("Confidence level:\n~" + str(user_output*100) + "%")
     else:
-        print("Confidence level:\n~" + str(np.around(100-user_output * 100, decimals=3)) + "%")
+        print("Confidence level:\n~" + str(100-user_output * 100) + "%")
 
     # DEBUG
     # print("Raw user output:\n" + str(user_output))
