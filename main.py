@@ -35,11 +35,12 @@ def return_one_or_zero(x):
 
 # --------------------------------------- VARIABLES ---------------------------------------
 
-number_of_layers = 10000
+number_of_layers = 100000
 
-dataset_size = 2000
+dataset_size = 5000
 
-fixed_seed = 1
+fixed_seed = None
+# 48071936
 
 random_seed = random.randint(0, 1000000000)
 
@@ -70,10 +71,9 @@ training_inputs = reshaped_array
 
 # Correct outputs based off of dataset
 for iteration in range(dataset_size):
-    if reshaped_array[iteration, 0] == 1:
-        if reshaped_array[iteration, 2] == 1:
-            training_outputs[iteration] = 1
-            # The current rule: if 1s are in both the 0 and 2 position of the array, the output should be 1
+    if reshaped_array[iteration, 1] == 1:
+        training_outputs[iteration] = 1
+        # The current rule: if 1s are in both the 0 and 2 position of the array, the output should be 1
     else:
         training_outputs[iteration] = 0
 
@@ -108,38 +108,48 @@ print("Average Error: " + str(np.average(error)))
 
 # --------------------------------------- USER INPUT ---------------------------------------
 
-# Initialize the user's input array
-user_array = np.random.random(3)
+continuing = 'y'
 
-# Ask for and copy each of the inputs to the array
-for i in range(3):
-    user_array_input = input("AC" + str(i + 1) + ": ")
+# Start a loop
+while continuing != 'n':
 
-    if isinstance(user_array_input, int) or isinstance(user_array_input, float):
-        user_array_input = random.randint(0, 1)
-        print("Non-int detected, defaulting to " + str(user_array_input) + ".")
-    else:
+    # Initialize the user's input array
+    user_array = np.random.random(3)
+
+    # Ask for and copy each of the inputs to the array
+    for i in range(3):
+        user_array_input = input("AC" + str(i + 1) + ": ")
+        user_array_input = int(user_array_input)
         user_array_input = return_one_or_zero(user_array_input)
 
-    user_array[i] = user_array_input
+        # if isinstance(user_array_input, int) is True or isinstance(user_array_input, float) is True:
+        #     user_array_input = return_one_or_zero(user_array_input)
+        # else:
+        #     user_array_input = random.randint(0, 1)
+        #     print("Non-int detected, defaulting to " + str(user_array_input) + ".")
 
-# Calculate outputs
-user_output = sigmoid(np.dot(user_array, synaptic_weights))
-rounded_user_output = np.around(user_output, decimals=0)
+        user_array[i] = user_array_input
 
-# Determine whether fixed or random seed, and print respectfully
-if isinstance(fixed_seed, int) or isinstance(fixed_seed, float):
-    print(f"Algorithm prediction, based on the training on the fixed seed \'" + str(fixed_seed) + f"\'")
-else:
-    print(f"Algorithm prediction, based on the training on the random seed \'" + str(random_seed) + f"\'")
+    # Calculate outputs
+    user_output = sigmoid(np.dot(user_array, synaptic_weights))
+    rounded_user_output = np.around(user_output, decimals=0)
 
-print("Educated guess on output:\n" + str(rounded_user_output))
+    # Determine whether fixed or random seed, and print respectfully
+    if isinstance(fixed_seed, int) or isinstance(fixed_seed, float):
+        print(f"Algorithm prediction, based on the training on the fixed seed \'" + str(fixed_seed) + f"\'")
+    else:
+        print(f"Algorithm prediction, based on the training on the random seed \'" + str(random_seed) + f"\'")
 
-# Calculate confidence level
-if rounded_user_output == 1:
-    print("Confidence level:\n~" + str(np.around(user_output*100, decimals=3)) + "%")
-else:
-    print("Confidence level:\n~" + str(np.around(100-user_output * 100, decimals=3)) + "%")
+    print("Educated guess on output:\n" + str(rounded_user_output))
 
-# DEBUG
-# print("Raw user output:\n" + str(user_output))
+    # Calculate confidence level
+    if rounded_user_output == 1:
+        print("Confidence level:\n~" + str(np.around(user_output*100, decimals=3)) + "%")
+    else:
+        print("Confidence level:\n~" + str(np.around(100-user_output * 100, decimals=3)) + "%")
+
+    # DEBUG
+    # print("Raw user output:\n" + str(user_output))
+
+    kill_loop = input("Calculate again? (y/n):\n")
+    continuing = kill_loop
