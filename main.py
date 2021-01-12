@@ -35,7 +35,7 @@ def return_one_or_zero(x):
 
 # --------------------------------------- VARIABLES ---------------------------------------
 
-number_of_layers = 100000
+training_iterations = 100000
 
 dataset_size = 5000
 
@@ -44,7 +44,7 @@ seed = None
 
 
 # Print initialized variables
-print("Number of layers: " + str(number_of_layers))
+print("Number of layers: " + str(training_iterations))
 print("Dataset size: " + str(dataset_size))
 
 
@@ -83,7 +83,7 @@ print(f"Random start synaptic weights:\n{synaptic_weights}")
 
 # --------------------------------------- TRAINING ---------------------------------------
 # Train the algorithm on the generated dataset
-for iteration in range(number_of_layers):
+for iteration in range(training_iterations):
 
     input_layer = training_inputs
     outputs = sigmoid(np.dot(input_layer, synaptic_weights))
