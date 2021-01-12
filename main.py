@@ -70,7 +70,7 @@ training_inputs = reshaped_array
 
 # Correct outputs based off of dataset
 for iteration in range(dataset_size):
-    if reshaped_array[iteration, 1] == 1:
+    if reshaped_array[iteration, 0] == 1 and reshaped_array[iteration, 2]:
         training_outputs[iteration] = 1
         # The current rule: if 1s are in both the 0 and 2 position of the array, the output should be 1
     else:
