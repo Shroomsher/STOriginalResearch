@@ -40,17 +40,43 @@ def return_one_or_zero(x):
 
 # --------------------------------------- VARIABLES ---------------------------------------
 
-training_iterations = 100000
+user_prompt = True
+# MUST BE True or False
 
-dataset_size = 2000
+if user_prompt is False:
 
-seed = None
-# 48071936
+    training_iterations = 50000
+    # MUST BE AN INTEGER // Can be anywhere between 10000 and 1000000
+
+    dataset_size = 2000
+    # MUST BE AN INTEGER // Can be anywhere between 1000-6000 // Should go down if the array_size goes up
+
+    array_size = 10
+    # MUST BE AN INTEGER // Can be anywhere between 3 and 25 // The larger it goes, the longer it will take to calculate
+
+    one_position_rule = 6
+    # MUST BE AN INTEGER // Can be anywhere between 1 and array_size
+
+    seed = None
+    # MUST BE AN INTEGER OR 'None' // Can be anywhere between 0 and 1x10^32
+else:
+    training_iterations = int(input("Training iterations\nMUST BE AN INTEGER // Can be anywhere between 10000 and 1000000:\n"))
+    dataset_size = int(input("Dataset size\nMUST BE AN INTEGER // Can be anywhere between 1000-6000 // Should go down if the array_size goes up:\n"))
+    array_size = int(input("Array size\nMUST BE AN INTEGER // Can be anywhere between 3 and 25 // The larger it goes, the longer it will take to calculate:\n"))
+    one_position_rule = int(input("One position rule\nMUST BE AN INTEGER // Can be anywhere between 1 and array_size:\n"))
+    seed = input("Seed\nMUST BE AN INTEGER OR 'None' // Can be anywhere between 0 and 1x10^32:\n")
+    seed = seed.lower()
+    if seed != 'none':
+        seed = int(seed)
+    else:
+        seed = None
 
 
 # Print initialized variables
 print("Number of layers: " + str(training_iterations))
 print("Dataset size: " + str(dataset_size))
+print("Array size: " + str(array_size))
+print("Rule: The '1' should be in slot #" + str(one_position_rule))
 
 
 # Set random seed at either the given value or a random number
@@ -68,21 +94,21 @@ print("Starting seed: " + str(seed))
 training_outputs = np.random.rand(dataset_size)
 
 # Initialize and generate random dataset of 1s and 0s
-random_array = np.random.rand(dataset_size * 3)
+random_array = np.random.rand(dataset_size * array_size)
 rounded_array = np.around(random_array, decimals=0)
-reshaped_array = rounded_array.reshape(dataset_size, 3)
+reshaped_array = rounded_array.reshape(dataset_size, array_size)
 training_inputs = reshaped_array
 
 # Correct outputs based off of dataset
 for iteration in range(dataset_size):
-    if reshaped_array[iteration, 0] == 1:
+    if reshaped_array[iteration, one_position_rule-1] == 1:
         training_outputs[iteration] = 1
         # The current rule: if there's a 1 in the first slot, the output should be 1
     else:
         training_outputs[iteration] = 0
 
 # Initialize synaptic weights
-synaptic_weights = 2 * np.random.random(3) - 1
+synaptic_weights = 2 * np.random.random(array_size) - 1
 
 print(f"Random start synaptic weights:\n{synaptic_weights}")
 
@@ -118,10 +144,10 @@ continuing = 'y'
 while continuing != 'n':
 
     # Initialize the user's input array
-    user_array = np.random.random(3)
+    user_array = np.random.random(array_size)
 
     # Ask for and copy each of the inputs to the array
-    for i in range(3):
+    for i in range(array_size):
         user_array_input = input("AC" + str(i + 1) + ": ")
         user_array_input = int(user_array_input)
         user_array_input = return_one_or_zero(user_array_input)
