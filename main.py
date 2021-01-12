@@ -39,10 +39,8 @@ number_of_layers = 100000
 
 dataset_size = 5000
 
-fixed_seed = None
+seed = None
 # 48071936
-
-random_seed = random.randint(0, 1000000000)
 
 
 # Print initialized variables
@@ -50,13 +48,14 @@ print("Number of layers: " + str(number_of_layers))
 print("Dataset size: " + str(dataset_size))
 
 
-# Set random or fixed seed
-if isinstance(fixed_seed, int) or isinstance(fixed_seed, float):
-    np.random.seed(fixed_seed)
-    print("Starting seed: " + str(fixed_seed))
-else:
-    np.random.seed(random_seed)
-    print("Starting seed: " + str(random_seed))
+# Set random seed at either the given value or a random number
+is_set_seed = True
+if seed is None:
+    is_set_seed = False
+    seed = random.randint(0, 1000000000)
+
+np.random.seed(seed)
+print("Starting seed: " + str(seed))
 
 # --------------------------------------- INITIALIZE EVERYTHING ---------------------------------------
 
@@ -135,10 +134,10 @@ while continuing != 'n':
     rounded_user_output = np.around(user_output, decimals=0)
 
     # Determine whether fixed or random seed, and print respectfully
-    if isinstance(fixed_seed, int) or isinstance(fixed_seed, float):
-        print(f"Algorithm prediction, based on the training on the fixed seed \'" + str(fixed_seed) + f"\'")
+    if is_set_seed:
+        print(f"Algorithm prediction, based on the training on the fixed seed \'" + str(seed) + f"\'")
     else:
-        print(f"Algorithm prediction, based on the training on the random seed \'" + str(random_seed) + f"\'")
+        print(f"Algorithm prediction, based on the training on the random seed \'" + str(seed) + f"\'")
 
     print("Educated guess on output:\n" + str(rounded_user_output))
 
