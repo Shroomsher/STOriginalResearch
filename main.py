@@ -92,7 +92,7 @@ for iteration in range(training_iterations):
     # Calculate adjustments to be made to the weights
     adjustments = error * sigmoid_derivative(outputs)
     # Make adjustments to the weights
-    synaptic_weights = synaptic_weights + np.dot(input_layer.T, adjustments)
+    synaptic_weights += np.dot(input_layer.T, adjustments)
 
     if (iteration + 1) % 1000 == 0:
         print("Calculated iteration #" + str(iteration+1))
