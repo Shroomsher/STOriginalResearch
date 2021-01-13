@@ -183,3 +183,4 @@ while continuing != 'n':
 
     kill_loop = input("Calculate again? (y/n):\n")
     continuing = kill_loop
+
