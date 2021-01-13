@@ -1,15 +1,30 @@
-# README
+# Preface
+### Overview
 This is the file that should explain most things in my OR. This readme can be found in my "Original Research Progress"
 google document as well.
 
 This generates a 2D array of numbers that are fed through an algorithm to make it understand the rule between input and
 outputs layer.
 
-As I discovered later, the math here isn't advanced enough to recognize and understand if more than one variable is
-responsible for the output of 1, so it has to be limited to 1 variable detection.
+
+#### **Layman's explanation:**
+When this algorithm is run by a user, it generates as many surveys as the user wants, of however many questions the user
+wants.
+This algorithm's goal is to correctly identify whether the user's survey output should be true `[1]` or false `[0]`.
+**This rule is as follows:**
+- If the answer to question *y* `[determined by user input]` is true `[1]`, then the response to this survey will be true.
+- If the answer to question *y* `[determined by user input]` is false `[0]`, then the response to this survey will be false.
+
+A separate algorithm that knows the rule then calculates the outputs of each survey based on this rule.
+After all of the surveys and responses have been calculated, they are shown to the main algorithm who, through a
+series of mathematical functions, tries to accurately determine the rule.
+After looking at the algorithms, calculating their best guess, seeing what was correct and what wasn't, and tweaking
+their guesses, they then can be given a user-input survey to test how accurately they can predict whether that survey's
+response should be true `[1]` or false `[0]`.
+This last step can be repeated however many times the user wishes.
 
 
-## The source code for this project is as follows:
+### The source code for this project is as follows:
 ```python
 # --------------------------------------- MODULES ---------------------------------------
 
