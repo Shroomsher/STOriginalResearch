@@ -38,9 +38,13 @@ def return_one_or_zero(x):
     return x
 
 
+def calculate_outputs(x, weights):
+    return sigmoid(np.dot(x, weights))
+
+
 # --------------------------------------- VARIABLES ---------------------------------------
 
-user_prompt = True
+user_prompt = False
 # MUST BE True or False
 
 if user_prompt is False:
@@ -117,7 +121,7 @@ print(f"Random start synaptic weights:\n{synaptic_weights}")
 for iteration in range(training_iterations):
 
     input_layer = training_inputs
-    outputs = sigmoid(np.dot(input_layer, synaptic_weights))
+    outputs = calculate_outputs(input_layer, synaptic_weights)
     # Calculate error
     error = training_outputs - outputs
     # Calculate adjustments to be made to the weights
