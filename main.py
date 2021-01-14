@@ -30,13 +30,13 @@ def main():
         training_iterations = 1000000
         # MUST BE AN INTEGER // Can be anywhere between 10000 and 1000000
 
-        dataset_size = 6000
+        dataset_size = random.randrange(1000,6000,100)
         # MUST BE AN INTEGER // Can be anywhere between 1000-6000 // Should go down if the array_size goes up
 
-        array_size = 10
-        # MUST BE AN INTEGER // Can be anywhere between 3 and 25 // The larger it goes, the longer it will take to calculate
+        array_size = random.randrange(3,14,1)
+        # MUST BE AN INTEGER // Can be anywhere between 3 and 12 // The larger it goes, the longer it will take to calculate
 
-        one_position_rule = 6
+        one_position_rule = random.randrange(1,array_size,1)
         # MUST BE AN INTEGER // Can be anywhere between 1 and array_size
 
         seed = None
