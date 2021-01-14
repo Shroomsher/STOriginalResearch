@@ -15,6 +15,56 @@
 
 import numpy as np
 import random
+import itertools
+
+# --------------------------------------- VARIABLES ---------------------------------------
+
+user_prompt = False
+# MUST BE True or False
+
+if user_prompt is False:
+
+    training_iterations = 500000
+    # MUST BE AN INTEGER // Can be anywhere between 10000 and 1000000
+
+    dataset_size = 6000
+    # MUST BE AN INTEGER // Can be anywhere between 1000-6000 // Should go down if the array_size goes up
+
+    array_size = 10
+    # MUST BE AN INTEGER // Can be anywhere between 3 and 25 // The larger it goes, the longer it will take to calculate
+
+    one_position_rule = 6
+    # MUST BE AN INTEGER // Can be anywhere between 1 and array_size
+
+    seed = None
+    # MUST BE AN INTEGER OR 'None' // Can be anywhere between 0 and 1x10^32
+else:
+    training_iterations = int(input("Training iterations\nMUST BE AN INTEGER // Can be anywhere between 10000 and 1000000:\n"))
+    dataset_size = int(input("Dataset size\nMUST BE AN INTEGER // Can be anywhere between 1000-6000 // Should go down if the array_size goes up:\n"))
+    array_size = int(input("Array size\nMUST BE AN INTEGER // Can be anywhere between 3 and 25 // The larger it goes, the longer it will take to calculate:\n"))
+    one_position_rule = int(input("One position rule\nMUST BE AN INTEGER // Can be anywhere between 1 and array_size:\n"))
+    seed = input("Seed\nMUST BE AN INTEGER OR 'None' // Can be anywhere between 0 and 1x10^32:\n")
+    seed = seed.lower()
+    if seed != 'none':
+        seed = int(seed)
+    else:
+        seed = None
+
+# Print initialized variables
+print("Number of layers: " + str(training_iterations))
+print("Dataset size: " + str(dataset_size))
+print("Array size: " + str(array_size))
+print("Rule: The '1' should be in slot #" + str(one_position_rule))
+
+
+# Set random seed at either the given value or a random number
+is_set_seed = True
+if seed is None:
+    is_set_seed = False
+    seed = random.randint(0, 1000000000)
+
+np.random.seed(seed)
+print("Starting seed: " + str(seed))
 
 
 # --------------------------------------- FUNCTIONS ---------------------------------------
@@ -42,55 +92,15 @@ def calculate_outputs(x, weights):
     return sigmoid(np.dot(x, weights))
 
 
-# --------------------------------------- VARIABLES ---------------------------------------
-
-user_prompt = False
-# MUST BE True or False
-
-if user_prompt is False:
-
-    training_iterations = 50000
-    # MUST BE AN INTEGER // Can be anywhere between 10000 and 1000000
-
-    dataset_size = 2000
-    # MUST BE AN INTEGER // Can be anywhere between 1000-6000 // Should go down if the array_size goes up
-
-    array_size = 10
-    # MUST BE AN INTEGER // Can be anywhere between 3 and 25 // The larger it goes, the longer it will take to calculate
-
-    one_position_rule = 6
-    # MUST BE AN INTEGER // Can be anywhere between 1 and array_size
-
-    seed = None
-    # MUST BE AN INTEGER OR 'None' // Can be anywhere between 0 and 1x10^32
-else:
-    training_iterations = int(input("Training iterations\nMUST BE AN INTEGER // Can be anywhere between 10000 and 1000000:\n"))
-    dataset_size = int(input("Dataset size\nMUST BE AN INTEGER // Can be anywhere between 1000-6000 // Should go down if the array_size goes up:\n"))
-    array_size = int(input("Array size\nMUST BE AN INTEGER // Can be anywhere between 3 and 25 // The larger it goes, the longer it will take to calculate:\n"))
-    one_position_rule = int(input("One position rule\nMUST BE AN INTEGER // Can be anywhere between 1 and array_size:\n"))
-    seed = input("Seed\nMUST BE AN INTEGER OR 'None' // Can be anywhere between 0 and 1x10^32:\n")
-    seed = seed.lower()
-    if seed != 'none':
-        seed = int(seed)
-    else:
-        seed = None
+def calculate_array_permutations(array_size_but_function):
+    return np.array(list(itertools.product([0, 1], repeat=array_size_but_function)))
 
 
-# Print initialized variables
-print("Number of layers: " + str(training_iterations))
-print("Dataset size: " + str(dataset_size))
-print("Array size: " + str(array_size))
-print("Rule: The '1' should be in slot #" + str(one_position_rule))
+def run_through_permutations(permutations, weights):
+    input_output = calculate_outputs(permutations, weights)
 
 
-# Set random seed at either the given value or a random number
-is_set_seed = True
-if seed is None:
-    is_set_seed = False
-    seed = random.randint(0, 1000000000)
 
-np.random.seed(seed)
-print("Starting seed: " + str(seed))
 
 # --------------------------------------- INITIALIZE EVERYTHING ---------------------------------------
 
