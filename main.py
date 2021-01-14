@@ -246,7 +246,7 @@ while continuing != 'n':
 
     if user_prompt is False:
 
-        training_iterations = 1000000
+        training_iterations = random.randrange(10000,1000000,1000)
         # MUST BE AN INTEGER // Can be anywhere between 10000 and 1000000
 
         dataset_size = random.randrange(1000,6000,100)
