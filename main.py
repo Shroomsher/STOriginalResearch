@@ -140,7 +140,7 @@ def save_results(inputs, true_sight_outputs, calculated_outputs, spreadsheet_nam
             file.write("\n")
 
 
-# --------------------------------------- INITIALIZE EVERYTHING ---------------------------------------
+# --------------------------------------- INITIALIZE DATASET & WEIGHTS ---------------------------------------
 
 # Initialize and generate random dataset of 1s and 0s
 random_array = np.random.rand(dataset_size * array_size)
@@ -180,6 +180,7 @@ print("Average Error: " + str(np.average(error)))
 # print("Inputs: " + str(input_layer))
 
 # --------------------------------------- SAVING RESULTS TO FILE ---------------------------------------
+
 save_results(training_inputs, training_outputs, outputs, "training_results")
 
 permutations = calculate_array_permutations(array_size)
@@ -356,7 +357,7 @@ while continuing != 'n':
                 file.write("\n")
 
 
-    # --------------------------------------- INITIALIZE EVERYTHING ---------------------------------------
+    # --------------------------------------- INITIALIZE DATASET & WEIGHTS ---------------------------------------
 
     # Initialize and generate random dataset of 1s and 0s
     random_array = np.random.rand(dataset_size * array_size)
@@ -397,6 +398,7 @@ while continuing != 'n':
     # print("Inputs: " + str(input_layer))
 
     # --------------------------------------- SAVING RESULTS TO FILE ---------------------------------------
+    
     save_results(training_inputs, training_outputs, outputs, "training_results")
 
     permutations = calculate_array_permutations(array_size)
