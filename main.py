@@ -20,7 +20,7 @@ import os
 
 # --------------------------------------- VARIABLES ---------------------------------------
 
-user_prompt = False
+user_prompt = True
 # MUST BE True or False
 
 if user_prompt is False:
@@ -181,12 +181,12 @@ print("Average Error: " + str(np.average(error)))
 
 # --------------------------------------- SAVING RESULTS TO FILE ---------------------------------------
 
-save_results(training_inputs, training_outputs, outputs, "training_results")
+"""save_results(training_inputs, training_outputs, outputs, "training_results")
 
 permutations = calculate_array_permutations(array_size)
 
 save_results(permutations, make_correct_outputs(permutations, one_position_rule),
-             calculate_outputs(permutations, synaptic_weights), "all_possible_results")
+             calculate_outputs(permutations, synaptic_weights), "all_possible_results")"""
 
 # --------------------------------------- USER INPUT ---------------------------------------
 
